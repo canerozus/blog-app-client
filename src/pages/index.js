@@ -9,7 +9,7 @@ export default function Home() {
       </Head>
       <main className='flex w-10/12'>
         <div className='flex gap-8 flex-col mx-5 '>
-           <Navbar />
+          <Navbar />
           <Posts />
         </div>
       </main>
