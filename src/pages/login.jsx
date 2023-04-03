@@ -1,14 +1,18 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function Login() {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [info, setInfo] = useState("");
+    const [error, setError] = useState("");
+    const router = useRouter();
 
     const login = async (e) => {
         e.preventDefault();
         try {
-             await fetch("http://localhost:8800/api/auth/login", {
+            const response = await fetch("http://localhost:8800/api/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -16,7 +20,22 @@ export default function Login() {
                 credentials: "include",
                 body: JSON.stringify({ username, password })
             })
-        } catch(err){
+            const data = await response.json();
+            if (response.ok) {
+                setInfo(data);
+                setTimeout(() => {
+                    router.push("/");
+                }, 1000);
+                clearTimeout(timeout);
+            } else {
+                setError(data);
+                setTimeout(() => {
+                    setError(null);
+                }, 2000);
+                clearTimeout(timeout);
+            }
+
+        } catch (err) {
             console.log(err)
         }
     }
@@ -34,6 +53,8 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
+                {info && <p className=''>{info}</p>}
+                {error && <p className=''>{error}</p>}
                 <button className="bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600 transition-colors duration-300 ease-in-out mb-4 w-full md:w-40">Login</button>
                 <p className="text-center text-gray-700">Don't have an account yet ? <Link href="/register" className="text-blue-500 hover:underline">Register</Link></p>
             </form>
