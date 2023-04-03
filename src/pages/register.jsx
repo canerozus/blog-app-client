@@ -26,6 +26,7 @@ export default function register() {
                 setTimeout(() =>{
                     router.push("/login");
                 },1500);
+                clearTimeout(setTimeout);
             } else {
                 setError(data);
             }

@@ -26,13 +26,13 @@ export default function Login() {
                 setTimeout(() => {
                     router.push("/");
                 }, 1000);
-                clearTimeout(timeout);
+                clearTimeout(setTimeout);
             } else {
                 setError(data);
                 setTimeout(() => {
                     setError(null);
                 }, 2000);
-                clearTimeout(timeout);
+                clearTimeout(setTimeout);
             }
 
         } catch (err) {
