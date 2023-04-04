@@ -7,21 +7,40 @@ export default function Navbar() {
     useEffect(() => {
         fetch("http://localhost:8800/api/profile", {
             credentials: "include",
-        }).then(async (response) => {
-            const data = await response.json()
-            setUserName(data.username);
+        }).then( (response) => {
+             response.json().then(userInfo => {
+                setUserName(userInfo.username)
+             })
+
+        }).catch((err) => {
+            console.log(err)
         })
     }, [])
-
+    const logout = () => {
+        fetch("http://localhost:8800/api/auth/logout", {
+            credentials: "include",
+            method: "POST",
+        }).then(response => response.json());
+    }
     return (
-
-        <div className='flex my-2 justify-between w-full h-10'>
-            <Link href='/' className='font-bold text-2xl mx-2'>My Blog</Link>
-            <div className='flex space-x-3 items-center text-lg mx-2'>
-                <Link href="/login">Login</Link>
-                <Link href="/register">Register</Link>
-            </div>
-        </div>
-
+        <>
+            {username ?
+                < div className='flex my-2 justify-between w-full h-10'>
+                    <Link href='/' className='font-bold text-2xl mx-2'>My Blog</Link>
+                    <div className='flex space-x-3 items-center text-lg mx-2'>
+                        <Link href="/create">Create New Post</Link>
+                        <a onClick={logout}>Logout</a>
+                    </div>
+                </div >
+                :
+                < div className='flex my-2 justify-between w-full h-10'>
+                    <Link href='/' className='font-bold text-2xl mx-2'>My Blog</Link>
+                    <div className='flex space-x-3 items-center text-lg mx-2'>
+                        <Link href="/login">Login</Link>
+                        <Link href="/register">Register</Link>
+                    </div>
+                </div >
+            }
+        </>
     )
 }
