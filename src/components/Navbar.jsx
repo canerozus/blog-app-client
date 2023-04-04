@@ -1,7 +1,18 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function Navbar() {
+    const [username, setUserName] = useState("")
+
+    useEffect(() => {
+        fetch("http://localhost:8800/api/profile", {
+            credentials: "include",
+        }).then(async (response) => {
+            const data = await response.json()
+            setUserName(data.username);
+        })
+    }, [])
+
     return (
 
         <div className='flex my-2 justify-between w-full h-10'>
