@@ -1,41 +1,50 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../redux/authSlice';
-
 
 export default function Login() {
-    const [username, setUserName] = useState('');
-    const [password, setPassword] = useState('');
-    const [info, setInfo] = useState('');
-    const [error, setError] = useState('');
+    const [username, setUserName] = useState("");
+    const [password, setPassword] = useState("");
+    const [info, setInfo] = useState("");
+    const [error, setError] = useState("");
     const router = useRouter();
-    const dispatch = useDispatch();
-    const auth = useSelector((state) => state.auth);
-  
-    const handleLogin = (e) => {
-      e.preventDefault();
-      dispatch(login(username, password))
-        .then(() => {
-          setInfo('Login successful!');
-          setTimeout(() => {
-            router.push('/');
-          }, 1000);
-        })
-        .catch((err) => {
-          setError(err.message);
-          setTimeout(() => {
-            setError(null);
-          }, 2000);
-        });
-    };
+
+    const login = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch("http://localhost:8800/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({ username, password })
+            })
+            const data = await response.json();
+            if (response.ok) {
+                setInfo(data);
+                setTimeout(() => {
+                    router.push("/");
+                }, 1000);
+                clearTimeout(timeout);
+            } else {
+                setError(data);
+                setTimeout(() => {
+                    setError(null);
+                }, 2000);
+                clearTimeout(timeout);
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return (
         <>
             <h1 className="text-3xl font-bold text-center my-6">Welcome to the Blog App!</h1>
             <p className="text-lg text-center my-4">This is a blog app that allows users to create, edit and delete posts.</p>
-            <form className="flex flex-col items-center" onSubmit={handleLogin}>
+            <form className="flex flex-col items-center" onSubmit={login}>
                 <input type="text" placeholder='Username' className="border border-gray-400 rounded-lg py-2 px-3 mb-4 w-full md:w-96"
                     value={username}
                     onChange={(e) => setUserName(e.target.value)}
