@@ -1,12 +1,13 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
-
+import { UserContext } from '@/context/userContext';
 export default function Login() {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [info, setInfo] = useState("");
     const [error, setError] = useState("");
+    const {setUserInfo, userInfo} = useContext (UserContext)
     const router = useRouter();
 
     const login = async (e) => {
@@ -20,26 +21,28 @@ export default function Login() {
                 credentials: "include",
                 body: JSON.stringify({ username, password })
             })
-            const data = await response.json();
+            const data = await response.json()
+            console.log(data)
             if (response.ok) {
-                setInfo(data);
+                setUserInfo(data)
+                setInfo(data.message)
                 setTimeout(() => {
                     router.push("/");
                 }, 1000);
-                clearTimeout(timeout);
+                clearTimeout(setTimeout);
             } else {
                 setError(data);
                 setTimeout(() => {
                     setError(null);
                 }, 2000);
-                clearTimeout(timeout);
+                clearTimeout(setTimeout);
             }
 
         } catch (err) {
             console.log(err)
         }
     }
-
+console.log(userInfo)
     return (
         <>
             <h1 className="text-3xl font-bold text-center my-6">Welcome to the Blog App!</h1>
