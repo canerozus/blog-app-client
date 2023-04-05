@@ -5,7 +5,8 @@ import { UserContext } from '../context/userContext'
 
 export default function Navbar() {
     const { userInfo, setUserInfo } = useContext(UserContext)
-    const username = userInfo.username
+    const username = userInfo?.username
+    console.log(userInfo)
     useEffect(() => {
         fetch("http://localhost:8800/api/profile", {
             credentials: "include",
@@ -23,7 +24,8 @@ export default function Navbar() {
         fetch("http://localhost:8800/api/auth/logout", {
             credentials: "include",
             method: "POST",
-        }).then(response => response.json())
+        })
+        setUserInfo(null)
     }
 
     return (

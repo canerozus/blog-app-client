@@ -22,9 +22,9 @@ export default function Login() {
                 body: JSON.stringify({ username, password })
             })
             const data = await response.json()
-            console.log(data)
+
             if (response.ok) {
-                setUserInfo(data)
+                setUserInfo(data.id, data.username)
                 setInfo(data.message)
                 setTimeout(() => {
                     router.push("/");
