@@ -23,10 +23,28 @@ export default function CreatePost() {
     const [title, setTitle] = useState("")
     const [summary, setSummary] = useState("")
     const [content, setContent] = useState("");
+    const [files, setFiles] = useState("");
     const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
+    const createNewPost = (e) => {
+        const data = new FormData();
+        data.set('title', title);
+        data.set('summary', summary);
+        data.set('content', content);
+        data.set('files', files[0]);
+        console.log(files)
+        e.preventDefault();
 
+        fetch("http://localhost:8800/api/post", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: data
+        })
+    }
     return (
-        <form className="max-w-2xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
+        <form className="max-w-2xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg"
+            onSubmit={createNewPost}>
             <div className="px-4 py-2 bg-gray-100 font-bold text-lg">Create a New Post</div>
             <div className="p-4">
                 <div className="mb-4">
@@ -45,7 +63,10 @@ export default function CreatePost() {
                 </div>
                 <div className="mb-4">
                     <label className="block text-gray-700 font-bold mb-2" htmlFor="image-file">Image File</label>
-                    <input className="w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500" type="file" id="image-file" name="image-file" />
+                    <input className="w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500" type="file" id="image-file" name="image-file"
+
+                        onChange={(e) => setFiles(e.target.files)}
+                    />
                 </div>
                 <div className="mb-4">
                     <label className="block text-gray-700 font-bold mb-2" htmlFor="content">Content</label>
