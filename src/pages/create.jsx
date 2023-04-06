@@ -25,22 +25,20 @@ export default function CreatePost() {
     const [content, setContent] = useState("");
     const [files, setFiles] = useState("");
     const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
-    const createNewPost = (e) => {
+    const createNewPost = async (e) => {
         const data = new FormData();
         data.set('title', title);
         data.set('summary', summary);
         data.set('content', content);
         data.set('files', files[0]);
-        console.log(files)
+
         e.preventDefault();
 
-        fetch("http://localhost:8800/api/post", {
+       const response = await fetch("http://localhost:8800/api/post", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: data
+            body: data,
         })
+        console.log(await response.json());
     }
     return (
         <form className="max-w-2xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg"
