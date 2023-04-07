@@ -42,7 +42,7 @@ export default function Login() {
             console.log(err)
         }
     }
-console.log(userInfo)
+
     return (
         <>
             <h1 className="text-3xl font-bold text-center my-6">Welcome to the Blog App!</h1>

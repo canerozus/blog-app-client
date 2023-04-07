@@ -23,21 +23,32 @@ export default function CreatePost() {
     const [title, setTitle] = useState("")
     const [summary, setSummary] = useState("")
     const [content, setContent] = useState("");
+    const [infomsg, setInfomsg] = useState("");
     const [files, setFiles] = useState("");
     const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
     const createNewPost = async (e) => {
+        try {
         const data = new FormData();
         data.set('title', title);
         data.set('summary', summary);
         data.set('content', content);
         data.set('file', files[0]);
         e.preventDefault();
-        
-        const response = await fetch("http://localhost:8800/api/post", {
-            method: "POST",
-            body: data,
-        })
-        console.log(await response.json())
+            const response = await fetch("http://localhost:8800/api/post", {
+                method: "POST",
+                body: data,
+            })
+            const info = await response.json()
+            console.log(data)
+            if (response.ok) {
+                setInfomsg(info.message)
+            } else{
+                setInfomsg(info.message)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 
     return (
@@ -74,6 +85,7 @@ export default function CreatePost() {
                             onChange={(newValue) => setContent(newValue)}
                         />
                     </div>
+                        {infomsg && <p>{infomsg}</p>}
                     <div className="flex justify-end">
                         <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none" type="submit">Create Post</button>
                     </div>
