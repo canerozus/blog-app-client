@@ -32,14 +32,14 @@ export default function CreatePost() {
         data.set('content', content);
         data.set('file', files[0]);
         e.preventDefault();
-
+        
         const response = await fetch("http://localhost:8800/api/post", {
             method: "POST",
             body: data,
         })
         console.log(await response.json())
     }
-    
+
     return (
         <form className="max-w-2xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg"
             onSubmit={createNewPost}>
