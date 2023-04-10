@@ -6,7 +6,7 @@ import { UserContext } from '../context/userContext'
 export default function Navbar() {
     const { userInfo, setUserInfo } = useContext(UserContext)
     const username = userInfo?.username
-    console.log(userInfo)
+    
     useEffect(() => {
         fetch("http://localhost:8800/api/profile", {
             credentials: "include",
