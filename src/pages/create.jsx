@@ -1,6 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useContext, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
+import Router from "next/router";
+import { UserContext } from '@/context/userContext';
+import withAuth from "@/components/Protected";
 
 const modules = {
     toolbar: [
@@ -19,21 +22,22 @@ const formats =
         'link', 'image'
     ]
 
-export default function CreatePost() {
+ function CreatePost() {
     const [title, setTitle] = useState("")
     const [summary, setSummary] = useState("")
     const [content, setContent] = useState("");
     const [infomsg, setInfomsg] = useState("");
     const [files, setFiles] = useState("");
+    const [redirect, setRedirect] = useState(false);
     const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
     const createNewPost = async (e) => {
         try {
-        const data = new FormData();
-        data.set('title', title);
-        data.set('summary', summary);
-        data.set('content', content);
-        data.set('file', files[0]);
-        e.preventDefault();
+            const data = new FormData();
+            data.set('title', title);
+            data.set('summary', summary);
+            data.set('content', content);
+            data.set('file', files[0]);
+            e.preventDefault();
             const response = await fetch("http://localhost:8800/api/post", {
                 method: "POST",
                 body: data,
@@ -42,13 +46,19 @@ export default function CreatePost() {
             console.log(data)
             if (response.ok) {
                 setInfomsg(info.message)
-            } else{
+                setTimeout(() => {
+                    setRedirect(true)
+                }, 1500)
+            } else {
                 setInfomsg(info.message)
             }
         } catch (error) {
             console.log(error)
         }
+    }
 
+    if (redirect) {
+        Router.push("/")
     }
 
     return (
@@ -85,7 +95,7 @@ export default function CreatePost() {
                             onChange={(newValue) => setContent(newValue)}
                         />
                     </div>
-                        {infomsg && <p>{infomsg}</p>}
+                    {infomsg && <p>{infomsg}</p>}
                     <div className="flex justify-end">
                         <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none" type="submit">Create Post</button>
                     </div>
@@ -95,3 +105,4 @@ export default function CreatePost() {
 
     )
 }
+ export default withAuth(CreatePost)
