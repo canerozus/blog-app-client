@@ -7,8 +7,8 @@ export default function Home() {
       <Head>
         <title>Blog App</title>
       </Head>
-      <main className='flex w-10/12'>
-        <div className='flex gap-8 flex-col mx-5 '>
+      <main className='flex w-10/12 mx-auto justify-center '>
+        <div className='flex gap-12 w-full flex-col mx-5 '>
           <Navbar />
           <Posts />
         </div>
