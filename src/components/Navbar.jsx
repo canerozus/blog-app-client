@@ -1,12 +1,14 @@
 import Link from 'next/link'
 import React, { useContext, useEffect, useState } from 'react'
-import Router from 'next/router'
+import {useRouter} from 'next/router'
 import { UserContext } from '../context/userContext'
 
 export default function Navbar() {
     const { userInfo, setUserInfo } = useContext(UserContext)
     const username = userInfo?.username
-    
+    const router = useRouter();
+    const currentPath = router.pathname;
+  
     useEffect(() => {
         fetch("http://localhost:8800/api/profile", {
             credentials: "include",
@@ -27,6 +29,20 @@ export default function Navbar() {
         })
         setUserInfo(null)
     }
+    
+    let navbarText = "";
+    let dynamicRoute = "";
+
+    if (currentPath === "/create") {
+        dynamicRoute = "/"
+      navbarText = "Home";
+    } else if (currentPath === "/") {
+    dynamicRoute = "/create";
+      navbarText = "Create New Post";
+    } else {
+    dynamicRoute = "/create";
+    navbarText = "";
+    }
 
     return (
         <>
@@ -34,7 +50,7 @@ export default function Navbar() {
                 < div className='flex my-2 justify-between w-full h-10 '>
                     <Link href='/' className='font-bold text-2xl mx-2'>My Blog</Link>
                     <div className='flex space-x-3 items-center text-lg mx-2'>
-                        <Link href="/create">Create New Post</Link>
+                        <Link href={dynamicRoute}>{navbarText}</Link>
                         <button onClick={logout}>Logout</button>
                     </div>
                 </div >

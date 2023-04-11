@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Router from "next/router";
 import { UserContext } from '@/context/userContext';
 import withAuth from "@/components/Protected";
+import Navbar from "@/components/Navbar";
 
 const modules = {
     toolbar: [
@@ -63,7 +64,9 @@ const formats =
     }
 
     return (
-        <form className="max-w-2xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg"
+        <>
+        <Navbar/>
+        <form className="max-w-2xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg mt-12"
             onSubmit={createNewPost}>
             <div className="px-4 py-2 bg-gray-100 font-bold text-lg">Create a New Post</div>
             <div className="p-4">
@@ -103,7 +106,7 @@ const formats =
                 </div>
             </div>
         </form>
-
+        </>
     )
 }
  export default withAuth(CreatePost)
