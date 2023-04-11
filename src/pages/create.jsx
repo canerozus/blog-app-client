@@ -41,6 +41,7 @@ const formats =
             const response = await fetch("http://localhost:8800/api/post", {
                 method: "POST",
                 body: data,
+                credentials: "include"
             })
             const info = await response.json()
             console.log(data)
