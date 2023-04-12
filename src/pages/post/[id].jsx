@@ -6,7 +6,7 @@ import { UserContext } from '@/context/userContext';
 
 export default function SinglePost() {
   const { userInfo } = useContext(UserContext)
-  console.log(userInfo)
+  
   const router = useRouter()
   const { id } = router.query
   const [postInfo, setPostInfo] = useState(null)
@@ -19,8 +19,15 @@ export default function SinglePost() {
     }
   }, [id])
   const handleDelete = (e) => {
-    fetch("http://localhost:8800/api/post/${id}")
+    fetch(`http://localhost:8800/api/post/${id}`, {
+      method: "DELETE"
+    })
     .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      router.push("/");
+    })
+    .catch(err =>console.log(err))
   }
   if (!postInfo) {
     return <div>Loading...</div>;
@@ -35,7 +42,7 @@ export default function SinglePost() {
           <div>
             {userInfo?.id === postInfo.author._id && (
               [<button key="edit" className='bg-gray-800 text-white p-1 w-28 rounded m-2'>Edit Post</button>,
-              <button key="delete" className='bg-red-600 text-white p-1 w-28 rounded m-2'>Delete Post</button>]
+              <button key="delete" onClick={handleDelete} className='bg-red-600 text-white p-1 w-28 rounded m-2'>Delete Post</button>]
             )}
 
           </div>
