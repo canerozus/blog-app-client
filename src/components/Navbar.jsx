@@ -34,14 +34,14 @@ export default function Navbar() {
     let dynamicRoute = "";
 
     if (currentPath === "/create") {
-        dynamicRoute = "/"
+        dynamicRoute = "/";
       navbarText = "Home";
     } else if (currentPath === "/") {
     dynamicRoute = "/create";
       navbarText = "Create New Post";
     } else {
-    dynamicRoute = "/create";
-    navbarText = "";
+    dynamicRoute = "/";
+    navbarText = "Home";
     }
 
     return (
