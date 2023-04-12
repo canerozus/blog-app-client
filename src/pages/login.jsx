@@ -26,6 +26,7 @@ export default function Login() {
             if (response.ok) {
                 setUserInfo(data.id, data.username)
                 setInfo(data.message)
+                
                 setTimeout(() => {
                     router.push("/");
                 }, 1000);

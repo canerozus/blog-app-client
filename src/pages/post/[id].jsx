@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
 import moment from 'moment';
 import { UserContext } from '@/context/userContext';
+import Link from 'next/link';
 
 export default function SinglePost() {
   const { userInfo } = useContext(UserContext)
@@ -41,7 +42,7 @@ export default function SinglePost() {
           <h1 className="text-4xl font-bold text-center">{postInfo.title}</h1>
           <div>
             {userInfo?.id === postInfo.author._id && (
-              [<button key="edit" className='bg-gray-800 text-white p-1 w-28 rounded m-2'>Edit Post</button>,
+              [<Link href={`/edit/${id}`} > <button key="edit" className='bg-gray-800 text-white p-1 w-28 rounded m-2'>Edit Post</button></Link>,
               <button key="delete" onClick={handleDelete} className='bg-red-600 text-white p-1 w-28 rounded m-2'>Delete Post</button>]
             )}
 

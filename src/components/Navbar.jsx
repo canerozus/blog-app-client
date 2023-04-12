@@ -28,6 +28,7 @@ export default function Navbar() {
             method: "POST",
         })
         setUserInfo(null)
+        
     }
     
     let navbarText = "";
