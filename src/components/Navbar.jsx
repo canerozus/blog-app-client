@@ -11,7 +11,7 @@ export default function Navbar() {
   
     useEffect(() => {
         fetch("https://blog-app-backend-rose.vercel.app/api/profile", {
-            credentials: "same-origin",
+            credentials: "include",
         }).then((response) => {
             response.json().then(userInfo => {
                 setUserInfo(userInfo)
