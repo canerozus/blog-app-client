@@ -12,7 +12,7 @@ export default function register() {
     const register = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:8800/api/auth/register", {
+            const response = await fetch("https://blog-mern-app.herokuapp.com/api/auth/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

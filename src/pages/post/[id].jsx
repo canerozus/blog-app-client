@@ -13,14 +13,14 @@ export default function SinglePost() {
   const [postInfo, setPostInfo] = useState(null)
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:8800/api/post/${id}`)
+      fetch(`https://blog-mern-app.herokuapp.com/api/post/${id}`)
         .then(response => response.json())
         .then(res => setPostInfo(res))
         .catch(error => console.error(error));
     }
   }, [id])
   const handleDelete = (e) => {
-    fetch(`http://localhost:8800/api/post/${id}`, {
+    fetch(`https://blog-mern-app.herokuapp.com/api/post/${id}`, {
       method: "DELETE"
     })
     .then(res => res.json())

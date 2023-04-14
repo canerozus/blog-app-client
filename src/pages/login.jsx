@@ -13,7 +13,7 @@ export default function Login() {
     const login = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:8800/api/auth/login", {
+            const response = await fetch("https://blog-mern-app.herokuapp.com/api/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

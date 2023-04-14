@@ -9,7 +9,7 @@ export default function Posts() {
 
     const [posts, setPosts] = useState([])
     useEffect(() => {
-        fetch("http://localhost:8800/api/post").then(response => {
+        fetch("https://blog-mern-app.herokuapp.com/api/post").then(response => {
             response.json().then(post => {
                 setPosts(post)
             })
