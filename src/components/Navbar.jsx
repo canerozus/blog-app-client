@@ -10,7 +10,7 @@ export default function Navbar() {
     const currentPath = router.pathname;
   
     useEffect(() => {
-        fetch("https://blog-mern-app.herokuapp.com/api/profile", {
+        fetch("https://blog-app-backend-rose.vercel.app/api/profile", {
             credentials: "include",
         }).then((response) => {
             response.json().then(userInfo => {
@@ -23,7 +23,7 @@ export default function Navbar() {
         })
     }, []);
     const logout = () => {
-        fetch("https://blog-mern-app.herokuapp.com/api/auth/logout", {
+        fetch("https://blog-app-backend-rose.vercel.app/api/auth/logout", {
             credentials: "include",
             method: "POST",
         })

@@ -12,7 +12,7 @@ export default function register() {
     const register = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("https://blog-mern-app.herokuapp.com/api/auth/register", {
+            const response = await fetch("https://blog-app-backend-rose.vercel.app/api/auth/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

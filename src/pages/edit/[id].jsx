@@ -35,7 +35,7 @@ function EditPost() {
 
     const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
     useEffect(() => {
-        fetch(`https://blog-mern-app.herokuapp.com/api/post/${id}`)
+        fetch(`https://blog-app-backend-rose.vercel.app/api/post/${id}`)
         .then(res => res.json())
         .then(postInfo => {
             setTitle(postInfo.title);
@@ -54,7 +54,7 @@ function EditPost() {
             data.set('file', files[0]);
             data.set('id', id);
             e.preventDefault();
-            const response = await fetch(`https://blog-mern-app.herokuapp.com/api/post/${id}`, {
+            const response = await fetch(`https://blog-app-backend-rose.vercel.app/api/post/${id}`, {
                 method: "PUT",
                 body: data,
                 credentials: "include"

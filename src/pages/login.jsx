@@ -13,7 +13,7 @@ export default function Login() {
     const login = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("https://blog-mern-app.herokuapp.com/api/auth/login", {
+            const response = await fetch("https://blog-app-backend-rose.vercel.app/api/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
