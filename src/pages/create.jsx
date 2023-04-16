@@ -39,7 +39,7 @@ const formats =
             data.set('content', content);
             data.set('file', files[0]);
             e.preventDefault();
-            const response = await fetch("https://blog-app-backend-cs1yiqi27-canerozus.vercel.app/api/post", {
+            const response = await fetch("https://blog-app-backend-rose.vercel.app/api/post", {
                 method: "POST",
                 body: data,
                 credentials: "include"
