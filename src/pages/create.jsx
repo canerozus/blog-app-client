@@ -43,6 +43,7 @@ const formats =
                 method: "POST",
                 body: data,
                 credentials: "include"
+                
             })
             const info = await response.json()
             console.log(data)
