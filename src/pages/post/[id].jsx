@@ -51,7 +51,7 @@ export default function SinglePost() {
         <p className="text-center mb-4 font-semibold">by @{postInfo.author.username}</p>
         <time className="text-gray-600 block mb-4  text-center">{moment(postInfo.createdAt).fromNow()}</time>
         <div className="mb-8">
-          <img className="w-full h-auto" src={'https://blog-app-backend-rose.vercel.app/' + postInfo.cover} alt={postInfo.title} />
+          <img className="w-full h-auto" src={postInfo.cover} alt={postInfo.title} />
         </div>
         <div className="text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: postInfo.content }} />
       </div>
